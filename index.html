@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="generate-pin-display" class="form-control" type="text" disabled>
+                    <button id="generateBtn" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="inputPinDisplay" class="form-control" type="text" disabled>
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <input class="number" type="button" name="number7" value="7" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number8" value="8" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number9" value="9" onclick="valueButton(this);">
+                            </div>
+                            <div class="calc-button-row">
+                                <input class="number" type="button" name="number4" value="4" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number5" value="5" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number6" value="6" onclick="valueButton(this);">
+                            </div>
+                            <div class="calc-button-row">
+                                <input class="number" type="button" name="number1" value="1" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number2" value="2" onclick="valueButton(this);">
+                                <input class="number" type="button" name="number3" value="3" onclick="valueButton(this);">
+                            </div>
+                              <div class="calc-button-row">
+                                <input class="number" type="button" name="delete" value="<" onclick="deleteNumber();">
+                                <input class="number" type="button" name="number0" value="0" onclick="valueButton(this);">
+                                <input class="number" type="button" name="clear" value="c" onclick="clearNumber();">
+                            </div>
+                            <div>
+                                <button id="submit-btn" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notify-section">
+            <p id="matched" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="unMatched" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+
+        </div>
+    </div>
+    <!-- javaScript code -->
+    <script>
+        // generate button event handler
+        const generateBtn = document.getElementById("generateBtn");
+            generateBtn.addEventListener('click', function(){
+            var randomNumber = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+        const generatePinDisplay = document.getElementById("generate-pin-display");
+            document.getElementById("generate-pin-display").innerText = randomNumber;
+            document.getElementById("generate-pin-display").value=randomNumber;
+        })
+        // input number button event handler
+        function valueButton(e){
+            inputPinDisplay.value += e.value;
+        }
+        function deleteNumber(){
+            inputPinDisplay.value = parseInt(inputPinDisplay.value/10);
+        }
+        function clearNumber(){
+            inputPinDisplay.value ="";
+        }
+        // submit button event handler
+            const submitBtn=document.getElementById("submit-btn");
+            const generateNumber=document.getElementById("generate-pin-display");
+            const inputNumber=document.getElementById("inputPinDisplay");
+            const result1=document.getElementById("matched");
+            const result2=document.getElementById("unMatched");
+        // submit button addEventListener
+              submitBtn.addEventListener('click',function(){
+                  if (generateNumber.value==inputNumber.value && generateNumber.value!=="") {
+                    result2.style.display='block'
+                    result1.style.display='none'
+                  }
+                  else{
+                    result2.style.display='none'
+                    result1.style.display='block'
+                  }
+        // clearing generate and input display
+                  document.getElementById("generate-pin-display").value = "";
+                  document.getElementById("inputPinDisplay").value = "";
+              })
+    </script>
+</body>
+</html>
